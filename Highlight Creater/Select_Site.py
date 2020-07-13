@@ -2,6 +2,7 @@ from web_scrapers import h_news as hn
 from web_scrapers import h_harward as d
 from web_scrapers import e_nutrition as e
 from web_scrapers import mbg_health as m
+from web_scrapers import h_news_covid as covid
 
 import random
 
@@ -22,14 +23,16 @@ def select_website(query,titles_used,stop_words,nutrition_topics,debugging=False
 
   select_site = {('mental-health','womens-health','food','fitness','skin-care','parenting'):'mbg',
                        ('nutritions', 'diet' , 'supplements'):'e_nutrition',
-                       ('health-news'):'h_news'}
+                       ('health-news'):'h_news',
+                       ('covid-19'):'h_news_covid'}
 
   mbg_topics = {"mental-health":["meditation",'spirituality','personal-growth','social-good'],
                 'womens-health':['womens-health'],
                 'food':['recipes','food-trends'],
                 'fitness':['healthy-weight','motivation','routines','outdoors','recovery'],
                 'skin-care': ['beauty'],
-                'parenting':['parenting']}
+                'parenting':['parenting'],
+                'child-health':['parenting']}
   
   if (query['INTEREST'] != None):
       site = get_value(select_site,query['INTEREST'])
@@ -65,6 +68,9 @@ def select_website(query,titles_used,stop_words,nutrition_topics,debugging=False
           token,doc,title = hn.get_news(titles_used,stop_words,True)
         else:
           token,doc,title = e.e_nutrition('',titles_used,stop_words,False,True)
+        return token,doc,title
+      elif (site== 'h_news_covid'):
+        token,doc,title = covid.get_news(titles_used,stop_words,True)
         return token,doc,title
         
   elif (query["DISEASE_GENERAL_SEARCH"] != None):
