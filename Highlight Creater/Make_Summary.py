@@ -8,7 +8,7 @@ def make_summary(doc,predictor,args,dict_dir=None):
       summary = ''
       source = rmv.split('— |, |\n| ',doc)
       length = len(source)
-      print("Total length: "+length)
+      print("Total length: "+len(length))
       corpa = []
       print(length)
       if (length>330):
